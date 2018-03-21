@@ -1,0 +1,26 @@
+{
+  "name": "create-react-component",
+  "version": "0.1.0",
+  "description": "A command line interface tool to create, shareable components, to publish to NPM. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loconluis/create-react-components.git"
+  },
+  "keywords": [
+    "CLI",
+    "shareable",
+    "components",
+    "react",
+    "boilerplate"
+  ],
+  "author": "Luis Locon <luis.locon@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loconluis/create-react-components/issues"
+  },
+  "homepage": "https://github.com/loconluis/create-react-components#readme"
+}
