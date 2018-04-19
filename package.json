@@ -25,5 +25,8 @@
   "homepage": "https://github.com/loconluis/create-react-components#readme",
   "dependencies": {
     "shelljs": "^0.8.1"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
   }
 }
