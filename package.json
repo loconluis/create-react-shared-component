@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/loconluis/create-react-components#readme",
   "dependencies": {
-    "shelljs": "^0.8.1"
+    "chalk": "^2.4.0",
+    "shelljs": "^0.8.1",
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "standard": "^11.0.1"
