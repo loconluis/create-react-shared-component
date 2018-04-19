@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/loconluis/create-react-components/issues"
   },
-  "homepage": "https://github.com/loconluis/create-react-components#readme"
+  "homepage": "https://github.com/loconluis/create-react-components#readme",
+  "dependencies": {
+    "shelljs": "^0.8.1"
+  }
 }
