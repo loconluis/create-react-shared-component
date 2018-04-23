@@ -16,4 +16,6 @@ Inspired by [create-react-app](https://github.com/facebook/create-react-app) �
 
 3. `$ npm start`
 
+4. Go to `src/index.js`
+
 And start coding 👨🏻‍💻.
