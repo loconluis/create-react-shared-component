@@ -16,7 +16,7 @@ let { dependencies, devDependencies } = require('./dependencies')
 // get the name of the project by argument on the console
 const projectName = process.argv[2]
 // config to the CLI when they write help
-const argv = yargs /* standard disabled line */
+const argv = yargs // eslint-disable-line
   .usage(`Usage:\n $0 ${colors.green('[project-name]')}`)
   .example('$0 shareableComponent')
   .epilog(`Made with ❤️  by @LoconLuis | Usage above, more information check the repo: ${colors.blue('https://github.com/loconluis/create-react-components')}`)
