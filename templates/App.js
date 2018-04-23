@@ -1,5 +1,5 @@
 const app = {
-  name: 'app.js',
+  name: 'src/app.js',
   content: `
     import React from 'react'
 

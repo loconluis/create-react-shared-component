@@ -1,4 +1,6 @@
-const webpackConfig = `
+const webpackConfig = {
+  name: 'webpack.config.js',
+  content: `
   const path = require('path')
   module.exports = {
     entry: './src/index.js',
@@ -37,6 +39,6 @@ const webpackConfig = `
       'react': 'commonjs react' // this line is just to use the React dependency of our parent-testing-project instead of using our own React.
     }
   }
-`
+`}
 
 module.exports = webpackConfig

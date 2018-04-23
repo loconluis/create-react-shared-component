@@ -1,5 +1,5 @@
 const appTemplate = require('./App')
-const packageJSONTemplate = require('./packageJSON')
+const gitIgnoreTemplate = require('./gitIgnore')
 const webpackTemplate = require('./webpackConfig')
 
-module.exports = { appTemplate, packageJSONTemplate, webpackTemplate }
+module.exports = { appTemplate, gitIgnoreTemplate, webpackTemplate }

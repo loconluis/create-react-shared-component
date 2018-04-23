@@ -7,7 +7,7 @@ const yargs = require('yargs')
 const fs = require('fs')
 // get all the templates
 let template = require('./templates')
-
+let packageJSON = require('./templates/packageJSON')
 // get the name of the project by argument on the console
 const projectName = process.argv[2]
 // config to the CLI when they write help
@@ -41,14 +41,30 @@ const cdIntoDirectory = () => {
     resolve()
   })
 }
-// write all the files
-const writeFiles = () => {
+// make an array of the files
+const getAnArrayFiles = () => {
+  let files = []
+  Object.keys(template).forEach(el => {
+    console.log('el', el)
+    files.push(template[el])
+  })
+  // push the packageJSON
+  files.push(packageJSON(projectName))
 
+  return files
+}
+// write all the files
+const writeFiles = (files) => {
+  // shell.exec('mkdir src')
+  // let theNewPackageJSON = packageJSON(projectName)
+  // files.map()
 }
 // trigger function to exec all
 const Trigger = async () => {
-  await createDirectory()
-  await cdIntoDirectory()
+  // await createDirectory()
+  // await cdIntoDirectory()
+
+  console.log(JSON.stringify(getAnArrayFiles(), undefined, 2))
 }
 
 Trigger()
