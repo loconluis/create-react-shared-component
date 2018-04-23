@@ -1,8 +1,11 @@
 {
   "name": "create-react-component",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "description": "A command line interface tool to create, shareable components, to publish to NPM. ",
   "main": "index.js",
+  "bin": {
+    "create-react-component": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,7 +27,12 @@
   },
   "homepage": "https://github.com/loconluis/create-react-components#readme",
   "dependencies": {
-    "shelljs": "^0.8.1"
+    "chalk": "^2.4.0",
+    "command-line-usage": "^5.0.4",
+    "ora": "^2.0.0",
+    "shelljs": "^0.8.1",
+    "yargonaut": "^1.1.2",
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "standard": "^11.0.1"
