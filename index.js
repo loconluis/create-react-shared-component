@@ -1,3 +1,5 @@
+#! /usr/local/bin/node
+
 // node lib to write (File System)
 const fs = require('fs')
 // Used imports
