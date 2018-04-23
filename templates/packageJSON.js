@@ -19,8 +19,7 @@ const createPackageJSON = (nameProject) => {
     "plugins": [
       "transform-object-rest-spread",
       "transform-react-jsx",
-      "transform-class-properties",
-      "emotion"
+      "transform-class-properties"
     ]
   },
   "standard": {
