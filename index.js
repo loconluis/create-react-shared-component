@@ -21,7 +21,7 @@ const projectName = process.argv[2]
 const argv = yargs // eslint-disable-line
   .usage(`Usage:\n $0 ${colors.green('[project-name]')}`)
   .example('$0 shareableComponent')
-  .epilog(`Made with ❤️  by @LoconLuis | Usage above, more information check the repo: ${colors.blue('https://github.com/loconluis/create-react-components')}`)
+  .epilog(`Made with ❤️  by @LoconLuis | Usage above, more information check the repo: ${colors.blue('https://github.com/loconluis/create-react-shared-component')}`)
   .help('h')
   .alias('h', 'help')
   .argv
