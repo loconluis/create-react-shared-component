@@ -1,13 +1,18 @@
+// node lib to write (File System)
+const fs = require('fs')
 // Used imports
 const shell = require('shelljs')
 const chalk = require('chalk')
 const colors = require('yargonaut').chalk()
 const yargs = require('yargs')
-// node lib to write (File System)
-const fs = require('fs')
+const Ora = require('ora')
+const spinner = new Ora({ color: 'yellow' })
 // get all the templates
 let template = require('./templates')
+// function to create a packageJSON with the projectName
 let packageJSON = require('./templates/packageJSON')
+// get all the array with dependencies
+let { dependencies, devDependencies } = require('./dependencies')
 // get the name of the project by argument on the console
 const projectName = process.argv[2]
 // config to the CLI when they write help
@@ -18,13 +23,13 @@ const argv = yargs /* standard disabled line */
   .help('h')
   .alias('h', 'help')
   .argv
+
 // create the new directory with the project-name
 const createDirectory = () => {
   return new Promise(resolve => {
     if (projectName) {
-      shell.exec(`mkdir ${process.argv[2]}`, (code) => {
-        console.log('code', code)
-        console.log(`${chalk.green('Creating Project...')}`)
+      shell.exec(`mkdir ${projectName}}`, (code) => {
+        console.log(`${chalk.green('\nCreating a directory for +' + projectName + '...\n')}`)
         resolve(true)
       })
     } else {
@@ -45,7 +50,6 @@ const cdIntoDirectory = () => {
 const getAnArrayFiles = () => {
   let files = []
   Object.keys(template).forEach(el => {
-    console.log('el', el)
     files.push(template[el])
   })
   // push the packageJSON
@@ -54,17 +58,58 @@ const getAnArrayFiles = () => {
   return files
 }
 // write all the files
-const writeFiles = (files) => {
-  // shell.exec('mkdir src')
-  // let theNewPackageJSON = packageJSON(projectName)
-  // files.map()
+const writeFiles = async (files) => {
+  return new Promise(resolve => {
+    shell.exec('mkdir src')
+    spinner.start('Writing some files 📝')
+    files.map(file => fs.writeFileSync(file.name, file.content, (err) => {
+      if (err) throw err
+    }))
+    resolve()
+  })
+}
+// Install dependencies, and devDependencies
+const installDependencies = (dependenciesArray) => {
+  return new Promise(resolve => {
+    shell.exec(`npm i -S ${dependenciesArray.join(' ')}`, () => {
+      spinner.succeed('Dependencies ready!')
+      spinner.stop()
+      resolve()
+    })
+  })
+}
+// Install dependencies, and devDependencies
+const installDevdependencies = (devDependenciesArray) => {
+  return new Promise(resolve => {
+    shell.exec(`npm i -D ${devDependenciesArray.join(' ')}`, () => {
+      spinner.succeed('Nice! DevDependencies are installed! 🤓')
+      spinner.stop()
+      resolve()
+    })
+  })
+}
+const lastLogs = () => {
+  console.log(`\nYes, the project is ready.\n`)
+  console.log(chalk.blue(`\ncd into ${projectName} directory\n`))
+  console.log(chalk.blue(`\nrun npm start .\n`))
+  console.log(chalk.yellow(`\nAnd start coding 👨🏻‍💻.\n`))
 }
 // trigger function to exec all
 const Trigger = async () => {
-  // await createDirectory()
-  // await cdIntoDirectory()
-
-  console.log(JSON.stringify(getAnArrayFiles(), undefined, 2))
+  await createDirectory()
+  if (projectName) {
+    await cdIntoDirectory()
+    const files = getAnArrayFiles()
+    await writeFiles(files)
+    // waiting to install packages
+    console.log(chalk.green('\nIts comming...\n'))
+    spinner.start('Installing dependencies 🌟')
+    await installDependencies(dependencies)
+    console.log(chalk.green('\nInstalling DevDependencies ✌🏼\n'))
+    spinner.start('Time for devDependencies 🙏🏼')
+    await installDevdependencies(devDependencies)
+    lastLogs()
+  }
 }
 
 Trigger()

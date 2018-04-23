@@ -1,18 +1,18 @@
 const app = {
-  name: 'src/app.js',
-  content: `
-    import React from 'react'
+  name: 'src/index.js',
+  content: `import React from 'react'
 
-    class MyComponentToNPM extends React.Component {
-      render () {
-        return (
-          <div>
-            <p>This was bootstraped with <a href='https://github.com/loconluis/create-react-components' target='_blank'><strong>create-react-component</strong></a></p>
-          </div>
-        )
-      }
-    }
+class MyComponentToNPM extends React.Component {
+  render () {
+    return (
+      <div>
+        <p>This was bootstraped with <a href='https://github.com/loconluis/create-react-components' target='_blank'><strong>create-react-component</strong></a></p>
+      </div>
+    )
+  }
+}
 
-    export default MyComponentToNPM`
+export default MyComponentToNPM
+`
 }
 module.exports = app
