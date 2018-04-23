@@ -7,7 +7,7 @@ Inspired by [create-react-app](https://github.com/facebook/create-react-app) ðŸ¤
 
 `$ npm install -g create-react-app`
 
-(you must have installed [node v6+](https://nodejs.org/))
+(you must have installed [node v7.1x+](https://nodejs.org/))
 
 ## Usage 
 1. `$ create-react-component [project-name]`
