@@ -91,6 +91,7 @@ const installDevdependencies = (devDependenciesArray) => {
     })
   })
 }
+// write the last logs for the app UI
 const lastLogs = () => {
   console.log(chalk.yellow(`\nYes, the project is ready.`))
   console.log(chalk.yellow(`\nTime to used:\n`))
@@ -120,5 +121,5 @@ const Trigger = async () => {
     console.log(chalk.red(e))
   }
 }
-
+// Call the main function
 Trigger()
