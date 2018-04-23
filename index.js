@@ -92,10 +92,14 @@ const installDevdependencies = (devDependenciesArray) => {
   })
 }
 const lastLogs = () => {
-  console.log(`\nYes, the project is ready.\n`)
-  console.log(chalk.blue(`\ncd into ${projectName} directory\n`))
-  console.log(chalk.blue(`\nrun npm start .\n`))
-  console.log(chalk.yellow(`\nAnd start coding 👨🏻‍💻.\n`))
+  console.log(chalk.yellow(`\nYes, the project is ready.`))
+  console.log(chalk.yellow(`\nTime to used:\n`))
+  console.log('>>> ' + chalk.bgCyan(chalk.black('cd ' + projectName)))
+  console.log(chalk.yellow(`\nTo start run:\n`))
+  console.log('>>> ' + chalk.bgCyan(chalk.black('npm start')))
+  console.log(chalk.yellow(`\nGoes to:\n`))
+  console.log('>>> ' + chalk.bgCyan(chalk.black('src/index.js')))
+  console.log(chalk.yellow.underline(`\nAnd start coding 👨🏻‍💻.\n`))
 }
 // trigger function to exec all
 const Trigger = async () => {

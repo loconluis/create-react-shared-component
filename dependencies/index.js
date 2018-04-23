@@ -9,6 +9,7 @@ module.exports = {
     'file-loader'
   ],
   devDependencies: [
+    'webpack-cli',
     'babel-cli',
     'babel-core',
     'babel-eslint',
