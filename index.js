@@ -26,10 +26,13 @@ const argv = yargs /* standard disabled line */
 
 // create the new directory with the project-name
 const createDirectory = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if (projectName) {
-      shell.exec(`mkdir ${projectName}}`, (code) => {
-        console.log(`${chalk.green('\nCreating a directory for +' + projectName + '...\n')}`)
+      shell.exec(`mkdir ${projectName}`, (code) => {
+        if (code === 1) {
+          return reject(new Error('File with the same name exist. Error code ' + code))
+        }
+        console.log(`${chalk.green('\nCreating a directory for >' + projectName + '...\n')}`)
         resolve(true)
       })
     } else {
@@ -61,7 +64,7 @@ const getAnArrayFiles = () => {
 const writeFiles = async (files) => {
   return new Promise(resolve => {
     shell.exec('mkdir src')
-    spinner.start('Writing some files 📝')
+    spinner.start('\nWriting some files 📝\n')
     files.map(file => fs.writeFileSync(file.name, file.content, (err) => {
       if (err) throw err
     }))
@@ -96,19 +99,21 @@ const lastLogs = () => {
 }
 // trigger function to exec all
 const Trigger = async () => {
-  await createDirectory()
-  if (projectName) {
+  try {
+    await createDirectory()
     await cdIntoDirectory()
     const files = getAnArrayFiles()
     await writeFiles(files)
     // waiting to install packages
-    console.log(chalk.green('\nIts comming...\n'))
+    console.log(chalk.green('\nHere we go..... ⚡️\n'))
     spinner.start('Installing dependencies 🌟')
     await installDependencies(dependencies)
-    console.log(chalk.green('\nInstalling DevDependencies ✌🏼\n'))
+    console.log(chalk.green('\nJust a few seconds more ✌🏼\n'))
     spinner.start('Time for devDependencies 🙏🏼')
     await installDevdependencies(devDependencies)
     lastLogs()
+  } catch (e) {
+    console.log(chalk.red(e))
   }
 }
 

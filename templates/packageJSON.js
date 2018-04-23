@@ -10,6 +10,10 @@ const createPackageJSON = (nameProject) => {
     "name": "",
     "email": ""
   },
+  "scripts": {
+    "start": "webpack --watch",
+    "build": "webpack -p"
+  },
   "babel": {
     "presets": ["env"],
     "plugins": [
