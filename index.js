@@ -64,7 +64,7 @@ const getAnArrayFiles = () => {
 const writeFiles = async (files) => {
   return new Promise(resolve => {
     shell.exec('mkdir src')
-    spinner.start('\nWriting some files 📝\n')
+    console.log('\nWriting some files 📝\n')
     files.map(file => fs.writeFileSync(file.name, file.content, (err) => {
       if (err) throw err
     }))
