@@ -1,127 +1,101 @@
 #! /usr/local/bin/node
 
-// node lib to write (File System)
 const fs = require('fs')
-// Used imports
 const shell = require('shelljs')
 const chalk = require('chalk')
-const colors = require('yargonaut').chalk()
 const yargs = require('yargs')
 const Ora = require('ora')
 const spinner = new Ora({ color: 'yellow' })
-// get all the templates
-let template = require('./templates')
+
+// Get all the templates
 // function to create a packageJSON with the projectName
-let packageJSON = require('./templates/packageJSON')
+const templates = require('./templates')
 // get all the array with dependencies
-let { dependencies, devDependencies } = require('./dependencies')
-// get the name of the project by argument on the console
-const projectName = process.argv[2]
+const { dependencies, devDependencies } = require('./dependencies')
+
+const depCommand = {
+  'devDependencies': '-D',
+  'dependencies': '-S'
+}
+
 // config to the CLI when they write help
-const argv = yargs // eslint-disable-line
-  .usage(`Usage:\n $0 ${colors.green('[project-name]')}`)
+const argv = yargs
+  .usage(`Usage:\n $0 ${chalk.green('[project-name]')}`)
+  .demand(1, 'Expecting the project name')
   .example('$0 shareableComponent')
-  .epilog(`Made with ❤️  by @LoconLuis | Usage above, more information check the repo: ${colors.blue('https://github.com/loconluis/create-react-shared-component')}`)
+  .epilog(`Made with ❤️  by @LoconLuis | Usage above, more information check the repo: ${chalk.blue('https://github.com/loconluis/create-react-shared-component')}`)
   .help('h')
   .alias('h', 'help')
   .argv
 
+// Get the name of the project by argument on the console
+const projectName = argv._[0] // Project index within the _ array of Yargs.
+
 // create the new directory with the project-name
 const createDirectory = () => {
-  return new Promise((resolve, reject) => {
-    if (projectName) {
-      shell.exec(`mkdir ${projectName}`, (code) => {
-        if (code === 1) {
-          return reject(new Error('File with the same name exist. Error code ' + code))
-        }
-        console.log(`${chalk.green('\nCreating a directory for >' + projectName + '...\n')}`)
-        resolve(true)
-      })
-    } else {
-      console.log(chalk.red('\n No project name was provided \n'))
-      console.log(chalk.red('\n For more information on how to use this CLI, use the command --help \n'))
-      resolve(false)
-    }
-  })
+  if (shell.exec(`mkdir ${projectName}`).code !== 0) {
+    throw new Error('File with the same name exist.')
+  }
+  console.log(chalk.green(`\n Creating a directory for > ${projectName}...\n`))
 }
-// return the directory to make moves here
-const cdIntoDirectory = () => {
-  return new Promise(resolve => {
-    shell.cd(projectName)
-    resolve()
-  })
-}
-// make an array of the files
-const getAnArrayFiles = () => {
-  let files = []
-  Object.keys(template).forEach(el => {
-    files.push(template[el])
-  })
-  // push the packageJSON
-  files.push(packageJSON(projectName))
 
-  return files
-}
+// return the directory to make moves here
+const cdIntoDirectory = () => shell.cd(projectName)
+
 // write all the files
-const writeFiles = async (files) => {
-  return new Promise(resolve => {
-    shell.exec('mkdir src')
-    console.log('\nWriting some files 📝\n')
-    files.map(file => fs.writeFileSync(file.name, file.content, (err) => {
-      if (err) throw err
-    }))
-    resolve()
-  })
+const writeFiles = (files) => {
+  shell.exec('mkdir src')
+  console.log('\n Writing some files 📝 \n')
+  files.forEach(file => fs.writeFileSync(file.name, file.content))
 }
+
 // Install dependencies, and devDependencies
-const installDependencies = (dependenciesArray) => {
-  return new Promise(resolve => {
-    shell.exec(`npm i -S ${dependenciesArray.join(' ')}`, () => {
-      spinner.succeed('Dependencies ready!')
+function installDeps (type, list) {
+  return new Promise((resolve, reject) => {
+    spinner.start(`Time for ${type} 🙏🏼 `)
+    shell.exec(`npm i ${depCommand[type]} ${list.join(' ')}`, (code, stdout, stderr) => {
       spinner.stop()
+      if (code !== 0) {
+        reject(new Error(`Something went wrong installing deps: ${stderr}`))
+      }
+      spinner.succeed(`Nice! ${type} are installed! 🤓`)
       resolve()
     })
   })
 }
-// Install dependencies, and devDependencies
-const installDevdependencies = (devDependenciesArray) => {
-  return new Promise(resolve => {
-    shell.exec(`npm i -D ${devDependenciesArray.join(' ')}`, () => {
-      spinner.succeed('Nice! DevDependencies are installed! 🤓')
-      spinner.stop()
-      resolve()
-    })
-  })
-}
+
 // write the last logs for the app UI
 const lastLogs = () => {
-  console.log(chalk.yellow(`\nYes, the project is ready.`))
-  console.log(chalk.yellow(`\nTime to used:\n`))
-  console.log('>>> ' + chalk.bgCyan(chalk.black('cd ' + projectName)))
+  console.log(chalk.yellow(`\n Yes, the project is ready.`))
+  console.log(chalk.yellow(`\n Time to use:\n`))
+  console.log('>>> ', chalk.bgCyan(chalk.black(`cd ${projectName}`)))
   console.log(chalk.yellow(`\nTo start run:\n`))
-  console.log('>>> ' + chalk.bgCyan(chalk.black('npm start')))
-  console.log(chalk.yellow(`\nGoes to:\n`))
-  console.log('>>> ' + chalk.bgCyan(chalk.black('src/index.js')))
-  console.log(chalk.yellow.underline(`\nAnd start coding 👨🏻‍💻.\n`))
+  console.log('>>> ', chalk.bgCyan(chalk.black('npm start')))
+  console.log(chalk.yellow(`\nGo to:\n`))
+  console.log('>>> ', chalk.bgCyan(chalk.black('src/index.js')))
+  console.log(chalk.yellow(`\nAnd  start coding 👨🏻‍💻. \n`))
 }
-// trigger function to exec all
-const Trigger = async () => {
+
+// main function to exec all
+(async function main () {
+  console.time('create-react-shared-component')
   try {
-    await createDirectory()
-    await cdIntoDirectory()
-    const files = getAnArrayFiles()
-    await writeFiles(files)
+    // mkdir and cd $_
+    createDirectory()
+    cdIntoDirectory()
+    // write templates to folder
+    writeFiles(templates(projectName))
     // waiting to install packages
-    console.log(chalk.green('\nHere we go..... ⚡️\n'))
-    spinner.start('Installing dependencies 🌟')
-    await installDependencies(dependencies)
-    console.log(chalk.green('\nJust a few seconds more ✌🏼\n'))
-    spinner.start('Time for devDependencies 🙏🏼')
-    await installDevdependencies(devDependencies)
+    console.log(chalk.green('\nHere we go..... ⚡️ \n'))
+    await installDeps('dependencies', dependencies)
+    console.log(chalk.green('\nJust a few more seconds ✌🏼 \n'))
+    await installDeps('devDependencies', devDependencies)
+    // finish
     lastLogs()
   } catch (e) {
-    console.log(chalk.red(e))
+    spinner.stop()
+    console.error(chalk.red(e))
+  } finally {
+    console.timeEnd('create-react-shared-component')
   }
-}
-// Call the main function
-Trigger()
+})()

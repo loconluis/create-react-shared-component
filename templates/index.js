@@ -1,7 +1,15 @@
 const appTemplate = require('./App')
-const gitIgnoreTemplate = require('./gitIgnore')
-const webpackTemplate = require('./webpackConfig')
 const esLintTemplate = require('./esLint')
 const npmIgnoreTemplate = require('./npmIgnore')
+const gitIgnoreTemplate = require('./gitIgnore')
+const pkg = require('./packageJSON')
+const webpackTemplate = require('./webpackConfig')
 
-module.exports = { appTemplate, gitIgnoreTemplate, webpackTemplate, esLintTemplate, npmIgnoreTemplate }
+module.exports = (projectName) => [
+  appTemplate,
+  esLintTemplate,
+  npmIgnoreTemplate,
+  gitIgnoreTemplate,
+  webpackTemplate,
+  pkg({ projectName })
+];
