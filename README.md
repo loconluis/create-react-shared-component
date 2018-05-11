@@ -16,6 +16,10 @@ Inspired by [create-react-app](https://github.com/facebook/create-react-app) �
 
 3. `$ npm start`
 
-4. Go to `src/index.js`
+4. `npm link` To link your project globally
 
-And start coding 👨🏻‍💻.
+4. Go to `src/index.js` And start coding 👨🏻‍💻.
+
+5. Link to other project this module `npm link [project-name]`
+
+**** Help is always grateful! 

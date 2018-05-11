@@ -1,12 +1,13 @@
 {
   "name": "create-react-shared-component",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "A command line interface tool to create, shareable components, to publish to NPM. ",
   "main": "index.js",
   "bin": {
     "create-react-shared-component": "./index.js"
   },
   "scripts": {
+    "standard": "standard",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,18 @@
     "react",
     "boilerplate"
   ],
-  "author": "Luis Locon <luis.locon@gmail.com>",
+  "author": {
+    "name": "Luis Locon",
+    "email": "luis.locon@gmail.com",
+    "url": "https://loconluis.github.io"
+  },
+  "contributors": [
+    {
+      "name": "Oscar Funes",
+      "email": "me@oscarfunes.com",
+      "url": "http://www.oscarfunes.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/loconluis/create-react-components/issues"
@@ -28,10 +40,8 @@
   "homepage": "https://github.com/loconluis/create-react-components#readme",
   "dependencies": {
     "chalk": "^2.4.0",
-    "command-line-usage": "^5.0.4",
     "ora": "^2.0.0",
     "shelljs": "^0.8.1",
-    "yargonaut": "^1.1.2",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
