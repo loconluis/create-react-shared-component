@@ -1,18 +1,14 @@
 const app = {
-  name: 'src/index.js',
-  content: `import React from 'react'
+  name: 'src/App.js',
+  content: `
+  import React from 'react';
 
-class MyComponentToNPM extends React.Component {
-  render () {
-    return (
-      <div>
-        <p>This was bootstraped with <a href='https://github.com/loconluis/create-react-components' target='_blank'><strong>create-react-component</strong></a></p>
-      </div>
-    )
-  }
-}
+const App = () => (
+  <div>
+    <h1>Create React Shared Component Minimal Configuration</h1>
+  </div>
+);
 
-export default MyComponentToNPM
-`
+export default App;`
 }
 module.exports = app

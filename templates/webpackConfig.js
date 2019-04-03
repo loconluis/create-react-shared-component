@@ -2,40 +2,50 @@ const webpackConfig = {
   name: 'webpack.config.js',
   content: `const path = require('path')
 module.exports = {
-  entry: './src/index.js',
+  entry: './index.js',
+  mode: 'development',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'index.js',
-    libraryTarget: 'commonjs2'
+    filename: './build.js'
   },
   module: {
     rules: [
       {
-        test: /.js$/,
-        include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|bower_components|build)/,
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
-          options: {}
+          loader: 'babel-loader'
         }
       },
       {
-        test: /.css$/,
-        use: [ 'style-loader', 'css-loader' ]
-      },
-      {
-        test: /.(png|jpg|gif|eot|svg|ttf|woff|woff2)$/,
+        test: /\.css$/,
         use: [
+          'style-loader',
           {
-            loader: 'file-loader',
-            options: {}
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
           }
         ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader']
       }
     ]
   },
-  externals: {
-    'react': 'commonjs react'
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 3010,
+    watchContentBase: true,
+    progress: true,
+    open: true
+  },
+  devtool: 'source-map',
+  externals : {
+    react: 'react'
+    react-dom: 'react-dom'
   }
 }
 `
